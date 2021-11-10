@@ -35,6 +35,11 @@ export const Map = () => {
         zoom: 11
     };
 
+    const handleApiLoaded = (map, maps) => {
+        console.log(map)
+        console.log(maps);
+      };
+
     return (
         
         // Important! Always set the container height explicitly
@@ -43,6 +48,8 @@ export const Map = () => {
                 bootstrapURLKeys={{ key: `${process.env.REACT_APP_GOOGLE_MAP_API_KEY}` }}
                 defaultCenter={defaultProps.center}
                 defaultZoom={defaultProps.zoom}
+                yesIWantToUseGoogleMapApiInternals
+                onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
             >
                 <AnyReactComponent
                     lat={lat}
