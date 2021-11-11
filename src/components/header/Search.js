@@ -40,6 +40,17 @@ const Search = () => {
     }
     const ref = useDetectClickOutside({ onTriggered: closeAdressList });
 
+    const getResult = (e) => {
+        const searchResult = locations.find(location => location.fullAdress.toUpperCase() === e.target.value.toUpperCase());
+        if (searchResult !== undefined) {
+            localStorage.setItem('coordonates', JSON.stringify({
+                lat: searchResult.lat,
+                long: searchResult.long
+            }));
+        }
+        console.log(searchResult);
+    }
+
     return (
         <div ref={ref}>
             <div>
@@ -58,7 +69,8 @@ const Search = () => {
                             setIsSearch(true);
                     }}
                     onChange={(e) => {
-                        setInputSearch(e.target.value)
+                        setInputSearch(e.target.value);
+                        getResult(e);
                     }}
                     value={inputSearch}
                 />

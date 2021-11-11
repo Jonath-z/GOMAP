@@ -41,13 +41,13 @@ export const ContributeForm = (props) => {
         const locationID = uuid();
         // if (locations !== null) {
         // console.log(locations);
-        const locationCheck = locations.filter(location =>  quarter === location.quarter && avenue === location.avenue && number === location.number );
+        const locationCheck = locations.filter(location =>  (quarter === location.quarter && avenue === location.avenue && number === location.number) || (lat === location.lat && long === location.long));
         if (locationCheck.length === 0) {
             realTimeDB.ref('locations').child(locationID).set({
                 locationID: `${locationID}`,
-                quarter: `${quarter.trim()}`,
-                avenue: `${avenue.trim()}`,
-                number: `${number.trim()}`,
+                quarter: `${quarter.trim().charAt(0).toUpperCase()}`,
+                avenue: `${avenue.trim().charAt(0).toUpperCase()}`,
+                number: `${number.trim().charAt(0).toUpperCase()}`,
                 lat: `${lat}`,
                 long: `${long}`,
                 fullAdress: `Q.${quarter} Av.${avenue} No.${number}`
