@@ -52,6 +52,7 @@ const Search = () => {
                     rounded-xl
                   bg-gray-50
                     outline-none
+                    sm:w-input-width-phone-format
                   '
                     onFocus={() => {
                             setIsSearch(true);
@@ -62,13 +63,13 @@ const Search = () => {
                     value={inputSearch}
                 />
             </div>
-            {isSearch && <div className='bg-white mt-2 pl-2 pr-2' >
+            {isSearch && <div className='bg-white mt-2' >
                 <ul className='flex flex-col'>
                     {
                         locations !== null && locations.map(location => {
                             return (
-                                <div className='adress-Container inline-flex'>
-                                    <li className='cursor-pointer' onClick={(e) => {
+                                <div className='adress-Container inline-flex hover:bg-gray-400 pl-2 pr-2' key={location.locationID}>
+                                    <li className='cursor-pointer pt-2 pb-2' onClick={(e) => {
                                         console.log(e.target);
                                         setInputSearch(e.target.innerHTML);
                                     }}>{location.fullAdress}</li>

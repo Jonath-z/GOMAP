@@ -32,7 +32,7 @@ export const Map = (props) => {
             lat: lat,
             lng: long
         },
-        zoom: 11
+        zoom: 15
     };
 
     const handleApiLoaded = (map, maps) => {
