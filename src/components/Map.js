@@ -4,7 +4,7 @@ import { IoLocationSharp } from 'react-icons/io5';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-export const Map = () => {
+export const Map = (props) => {
     const [long, setLong] = useState();
     const [lat, setLat] = useState();
     useEffect(() => {
@@ -36,14 +36,13 @@ export const Map = () => {
     };
 
     const handleApiLoaded = (map, maps) => {
-        console.log(map)
-        console.log(maps);
+        console.log(map);
       };
 
     return (
         
         // Important! Always set the container height explicitly
-       long !== undefined && lat !== undefined ? <div style={{ height: '100vh', width: '100%' }}>
+        long !== undefined && lat !== undefined ? <div style={{ height: '100vh', width: '100%' }}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: `${process.env.REACT_APP_GOOGLE_MAP_API_KEY}` }}
                 defaultCenter={defaultProps.center}
@@ -54,17 +53,16 @@ export const Map = () => {
                 <AnyReactComponent
                     lat={lat}
                     lng={long}
-                    text={<IoLocationSharp className='text-red-600 text-3xl shadow-2xl'/>}
+                    text={<IoLocationSharp className='text-red-600 text-3xl shadow-2xl' />}
                 />
             </GoogleMapReact>
-
         </div> :
             <div>
                 <h1>
                     please allow GOMAP to get your current location
                 </h1>
             </div>
-    )
+    );
 }
 
 export default Map;
