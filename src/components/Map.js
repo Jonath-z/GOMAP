@@ -54,8 +54,8 @@ export const Map = (props) => {
     
     const defaultProps = {
         center: {
-            lat: -1.6740900,
-            lng: 29.2284500
+            lat: parseFloat(lat),
+            lng: parseFloat(long)
         },
         zoom: 12
     };

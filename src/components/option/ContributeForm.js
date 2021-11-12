@@ -45,9 +45,9 @@ export const ContributeForm = (props) => {
         if (locationCheck.length === 0) {
             realTimeDB.ref('locations').child(locationID).set({
                 locationID: `${locationID}`,
-                quarter: `${quarter.trim().charAt(0).toUpperCase()}`,
-                avenue: `${avenue.trim().charAt(0).toUpperCase()}`,
-                number: `${number.trim().charAt(0).toUpperCase()}`,
+                quarter: `${quarter.trim()}`,
+                avenue: `${avenue.trim()}`,
+                number: `${number.trim()}`,
                 lat: `${lat}`,
                 long: `${long}`,
                 fullAdress: `Q.${quarter} Av.${avenue} No.${number}`
