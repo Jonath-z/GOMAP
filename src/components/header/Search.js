@@ -41,16 +41,13 @@ const Search = () => {
     const ref = useDetectClickOutside({ onTriggered: closeAdressList });
 
     const getResult = (e) => {
-        const searchResult = locations.find(location => location.fullAdress.toUpperCase().trim() === e.target.value.toUpperCase().trim());
+        const searchResult = locations.find(location => location.fullAdress.toUpperCase().trim() === inputSearch.toUpperCase().trim());
         if (searchResult !== undefined) {
             localStorage.setItem('coordonates', JSON.stringify([{
                 lat: searchResult.lat,
                 long: searchResult.long,
                 fullAdress: searchResult.fullAdress
             }]));
-        }
-        if (searchResult === undefined) {
-            localStorage.removeItem('coordonates');
         }
         console.log(searchResult);
     }
