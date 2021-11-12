@@ -16,7 +16,7 @@ export const Map = (props) => {
             console.log(err)
         };
         if (navigator.geolocation) {
-            navigator.geolocation.watchPosition((pos) => {
+            navigator.geolocation.getCurrentPosition((pos) => {
                 setLat(pos.coords.latitude);
                 setLong(pos.coords.longitude);
                 console.log(pos.coords);
