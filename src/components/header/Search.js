@@ -49,6 +49,9 @@ const Search = () => {
                 fullAdress: searchResult.fullAdress
             }]));
         }
+        if (searchResult === undefined) {
+            localStorage.removeItem('coordonates');
+        }
         console.log(searchResult);
     }
 
