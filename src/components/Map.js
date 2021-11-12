@@ -170,4 +170,5 @@ export const Map = (props) => {
     );
 }
 
-export default memo(Map);
+// export default memo(Map);
+export default Map;
