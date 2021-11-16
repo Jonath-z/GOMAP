@@ -1,4 +1,4 @@
-import Maps from "./components/Map";
+import Maps from "./components/map/Map";
 import Header from "./components/header/Header";
 
 function App(props) {
