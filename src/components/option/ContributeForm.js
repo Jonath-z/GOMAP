@@ -39,8 +39,6 @@ export const ContributeForm = (props) => {
 
     const addLocation = () => {
         const locationID = uuid();
-        // if (locations !== null) {
-        // console.log(locations);
         const locationCheck = locations.filter(location =>  (quarter === location.quarter && avenue === location.avenue && number === location.number) || (lat === location.lat && long === location.long));
         if (locationCheck.length === 0) {
             realTimeDB.ref('locations').child(locationID).set({
@@ -57,6 +55,7 @@ export const ContributeForm = (props) => {
             setAvenue('');
             setLat()
             setLong();
+            props.cancel();
         }
         if (locationCheck.length > 0) {
             alert('this adress does exists');
@@ -78,7 +77,9 @@ export const ContributeForm = (props) => {
                     </div>
                 </div>
                 <div className='grid grid-cols-2 gap-2 mt-2'>
-                    {quarter !== '' && number !== '' && avenue !== '' && <button onClick={addLocation} className='text-white bg-green-500 hover:bg-green-600 pt-2 pl-2 pb-2 pr-2'>Add the location</button>}
+                    {quarter !== '' && number !== '' && avenue !== '' && long !== undefined && lat !== undefined &&
+                        <button onClick={addLocation} className='text-white bg-green-500 hover:bg-green-600 pt-2 pl-2 pb-2 pr-2'>Add the location</button>
+                    }
                     <button type='button' className='text-white bg-red-500 hover:bg-red-600 pt-2 pl-2 pb-2 pr-2' onClick={props.cancel}>Cancel</button>
                 </div>
             </div>
