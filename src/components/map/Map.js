@@ -11,8 +11,8 @@ export const Map = (props) => {
     const [locationInfo, setLocationInfo] = useState(null);
     const [myLocationInfo, setMyLocationInfo] = useState(false);
     const [map, setMap] = useState(null);
-    let [lat, setLat] = useState(lt);
-    let [long, setLong] = useState(lng);
+    let [lat, setLat] = useState();
+    let [long, setLong] = useState();
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -41,8 +41,8 @@ export const Map = (props) => {
     
     const defaultProps = {
         center: {
-            lat: -1.6740900,
-            lng: 29.2284500
+            lat: parseFloat(lat),
+            lng: parseFloat(long),
         },
         zoom: 12
     };
@@ -53,7 +53,7 @@ export const Map = (props) => {
     }
 
     return (
-        isLoaded ? <div style={{ height: '100vh', width: '100%' }}>
+        isLoaded ? <div style={{ height: '100%', width: '100%' }}>
             <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={defaultProps.center}
@@ -70,8 +70,6 @@ export const Map = (props) => {
                     onClick={() => {
                         setMyLocationInfo(true);
                     }}
-                                  
-                // text={<IoLocationSharp className='text-red-600 text-2xl shadow-2xl' />}
                 >
                 </Marker>
                 {JSON.parse(localStorage.getItem('coordonates')) &&
