@@ -49,7 +49,7 @@ const Search = () => {
                 fullAdress: searchResult.fullAdress
             }]));
         }
-        console.log(searchResult);
+        // console.log(searchResult);
     }
 
     return (

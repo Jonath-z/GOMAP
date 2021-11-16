@@ -28,9 +28,9 @@ export const Map = (props) => {
         setMap(null)
     }, []);
 
-    useEffect(() => {
-        console.log(map);
-    }, [map]);
+    // useEffect(() => {
+    //     console.log(map);
+    // }, [map]);
     
     const defaultProps = {
         center: {
@@ -78,7 +78,7 @@ export const Map = (props) => {
                                 }}
                                 onClick={() => {
                                     setLocationInfo(location)
-                                    console.log(locationInfo);
+                                    // console.log(locationInfo);
                                     setSelectedLocation(true)
                                 }}
                                 animation={1}

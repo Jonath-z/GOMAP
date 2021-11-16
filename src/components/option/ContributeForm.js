@@ -18,7 +18,7 @@ export const ContributeForm = (props) => {
             navigator.geolocation.getCurrentPosition((pos) => {
                 setLat(pos.coords.latitude);
                 setLong(pos.coords.longitude);
-                console.log(pos.coords);
+                // console.log(pos.coords);
             }, error, {
                 enableHighAccuracy: true,
                 timeout: 5000,

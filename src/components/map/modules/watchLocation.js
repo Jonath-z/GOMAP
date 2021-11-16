@@ -8,7 +8,7 @@ const watchLocation = () => {
         navigator.geolocation.watchPosition((pos) => {
             lat = pos.coords.latitude;
             long = pos.coords.longitude;
-            console.log(pos.coords);
+            // console.log(pos.coords);
         }, error, {
             enableHighAccuracy: true,
             timeout: 5000,
