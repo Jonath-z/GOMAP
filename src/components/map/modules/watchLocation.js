@@ -1,13 +1,13 @@
-export let long;
-export let lat;
+export let lng;
+export let lt;
 const watchLocation = () => {
     const error = (err) => {
         console.log(err)
     };
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition((pos) => {
-            lat = pos.coords.latitude;
-            long = pos.coords.longitude;
+            lt = pos.coords.latitude;
+            lng = pos.coords.longitude;
             // console.log(pos.coords);
         }, error, {
             enableHighAccuracy: true,

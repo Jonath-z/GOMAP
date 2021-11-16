@@ -1,6 +1,6 @@
 import React, {useEffect,useState,useCallback } from 'react'
 // import GoogleMapReact from 'google-map-react';
-import { long,lat } from './modules/watchLocation';
+import { lng,lt } from './modules/watchLocation';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 // import { DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 // import { IoLocationSharp } from 'react-icons/io5';
@@ -10,14 +10,21 @@ export const Map = (props) => {
     const [selectedLocation, setSelectedLocation] = useState(false);
     const [locationInfo, setLocationInfo] = useState(null);
     const [myLocationInfo, setMyLocationInfo] = useState(false);
+    const [map, setMap] = useState(null);
+    let [lat, setLat] = useState(lt);
+    let [long, setLong] = useState(lng);
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
     })
     
-    const [map, setMap] = useState(null)
-    
+    useEffect(() => {
+        setLat(lt);
+        setLong(lng);
+        console.log(lat, long);
+    }, [lat,long]);
+
     const onLoad = useCallback((map) => {
         const bounds = new window.google.maps.LatLngBounds();
         map.fitBounds(bounds);
@@ -34,8 +41,8 @@ export const Map = (props) => {
     
     const defaultProps = {
         center: {
-            lat: parseFloat(lat),
-            lng: parseFloat(long)
+            lat: -1.6740900,
+            lng: 29.2284500
         },
         zoom: 12
     };
