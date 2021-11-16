@@ -36,7 +36,7 @@ const Options = () => {
             </div>
             {
                 isSlideOptions &&
-                <div className='absolute z-10 left-0 pb-5 w-max pr-5 pl-5 pt-5 bg-white top-10 sm:mt-4'>
+                <div className='absolute z-10 left-0 pb-5 w-max pr-5 pl-5 pt-5 bg-white top-10 sm:mt-5'>
                     
                        
                             <div>

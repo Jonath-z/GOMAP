@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useCallback } from 'react'
+import React, {useEffect,useState,useCallback } from 'react'
 // import GoogleMapReact from 'google-map-react';
 import { long,lat } from './modules/watchLocation';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
@@ -28,9 +28,9 @@ export const Map = (props) => {
         setMap(null)
     }, []);
 
-    // useEffect(() => {
-    //     console.log(map);
-    // }, [map]);
+    useEffect(() => {
+        // console.log(map);
+    }, [map]);
     
     const defaultProps = {
         center: {
