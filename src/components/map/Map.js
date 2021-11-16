@@ -1,6 +1,5 @@
 import React, {useEffect,useState,useCallback } from 'react'
 // import GoogleMapReact from 'google-map-react';
-import { lng,lt } from './modules/watchLocation';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 // import { DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 // import { IoLocationSharp } from 'react-icons/io5';
@@ -20,10 +19,26 @@ export const Map = (props) => {
     })
     
     useEffect(() => {
-        setLat(lt);
-        setLong(lng);
-        console.log(lat, long);
-    }, [lat,long]);
+        const watchLocation = () => {
+            const error = (err) => {
+                console.log(err)
+            };
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition((pos) => {
+                    setLat(pos.coords.latitude);
+                    setLong(pos.coords.longitude);
+                }, error, {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                });
+            }
+            else {
+                alert('please allow GOMAP to access to your location');
+            }
+        }
+        watchLocation();
+    }, []);
 
     const onLoad = useCallback((map) => {
         const bounds = new window.google.maps.LatLngBounds();
