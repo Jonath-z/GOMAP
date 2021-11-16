@@ -81,7 +81,7 @@ const Search = () => {
                     {
                         locations !== null && locations.map(location => {
                             return (
-                                <div className='adress-Container inline-flex hover:bg-gray-400 pl-2 pr-2' key={location.locationID}>
+                                <div className='adress-Container inline-flex hover:bg-gray-400 pl-2 pr-2 max-h-48' key={location.locationID}>
                                     <li className='cursor-pointer pt-2 pb-2' onClick={(e) => {
                                         console.log(e.target.innerHTML);
                                         setInputSearch(e.target.innerHTML);
