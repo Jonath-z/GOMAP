@@ -67,7 +67,7 @@ const Search = () => {
                     sm:w-input-width-phone-format
                   '
                     onFocus={() => {
-                            setIsSearch(true);
+                        setIsSearch(true);
                     }}
                     onChange={(e) => {
                         setInputSearch(e.target.value);
@@ -83,8 +83,9 @@ const Search = () => {
                             return (
                                 <div className='adress-Container inline-flex hover:bg-gray-400 pl-2 pr-2' key={location.locationID}>
                                     <li className='cursor-pointer pt-2 pb-2' onClick={(e) => {
-                                        console.log(e.target);
+                                        console.log(e.target.innerHTML);
                                         setInputSearch(e.target.innerHTML);
+                                        getResult(e);
                                     }}>{location.fullAdress}</li>
                                 </div>
                             
@@ -96,5 +97,4 @@ const Search = () => {
         </div>
     );
 }
-
 export default Search
