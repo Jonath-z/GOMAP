@@ -31,7 +31,7 @@ const Options = () => {
 
     return (
         <div ref={ref}>
-            <div className='absolute z-10 left-4'>
+            <div className='absolute z-10 left-4 xsm:left-2'>
                 <CgMenuGridR className='text-white text-4xl cursor-pointer' onClick={openSlideOptions} />
             </div>
             {

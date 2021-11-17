@@ -65,6 +65,7 @@ const Search = () => {
                   bg-gray-50
                     outline-none
                     sm:w-input-width-phone-format
+                    xsm:w-input-width-phone-format-xsm
                   '
                     onFocus={() => {
                         setIsSearch(true);
