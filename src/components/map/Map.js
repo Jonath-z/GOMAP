@@ -131,35 +131,6 @@ export const Map = (props) => {
                 >
                     <div>{locationInfo.fullAdress}<br/>Goma<br/>DRC</div>
                 </InfoWindow>}
-                {/* <DirectionsService
-                    options={{
-                        destination: {
-                            lat:parseFloat(locationInfo.lat),
-                            lng: parseFloat(locationInfo.long)
-                        },
-                        origin: {
-                            lat:parseFloat(lat),
-                            lng:parseFloat(long)
-                        },
-                        travelMode: 'DRIVING',
-                    }}
-                    callback={() => {
-                        console.log('callBack');
-                    }}
-                    onLoad={directionsService => {
-                        console.log('directions services', directionsService);
-                    }}
-                >
-                </DirectionsService> */}
-                {/* <DirectionsRenderer
-                    options={{
-                        directions: {
-                            lat:parseFloat(locationInfo.lat),
-                           lng:parseFloat(locationInfo.long)},
-                    }}
-                >
-
-                </DirectionsRenderer> */}
             </GoogleMap>
         </div> :
             <div className='flex justify-center items-center'>
