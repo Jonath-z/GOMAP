@@ -1,15 +1,13 @@
-import Maps from "./components/map/Map";
+import MapBox from "./components/map";
 import Header from "./components/header/Header";
 
 function App(props) {
   return (
-    <div className="App">
+    <div>
       <div>
         <Header />
       </div>
-      <div>
-        <Maps />
-      </div>
+        <MapBox />
     </div>
   );
 }

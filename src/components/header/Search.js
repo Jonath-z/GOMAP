@@ -20,11 +20,8 @@ const Search = () => {
         let searchInputValue = inputSearch;
         let searchFilter = searchInputValue.toUpperCase();
         let adressList = document.querySelectorAll('.adress-Container');
-        // console.log(adressList)s;
-        // console.log(searchFilter);  
         for (let i = 0; i < adressList.length; i++) {
             let location = adressList[i].getElementsByTagName('li')[0];
-            // console.log(i);
             let adress = location.textContent || location.innerText;
             if (adress.toUpperCase().indexOf(searchFilter) > -1) {
                 adressList[i].style.display = 'flex';
