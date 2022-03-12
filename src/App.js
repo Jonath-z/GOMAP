@@ -1,13 +1,12 @@
 import MapBox from "./components/map";
-import Header from "./components/header/Header";
+import Header from "./components/header";
+
 
 function App(props) {
   return (
     <div>
-      <div>
-        <Header />
-      </div>
-        <MapBox />
+      <Header />
+      <MapBox />
     </div>
   );
 }

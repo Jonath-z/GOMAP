@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { realTimeDB } from '../../modules/firebase';
+import { realTimeDB } from '../../../modules/firebase';
 import { useDetectClickOutside } from 'react-detect-click-outside';
 
 const Search = () => {
@@ -38,19 +38,17 @@ const Search = () => {
     const ref = useDetectClickOutside({ onTriggered: closeAdressList });
 
     const getResult = (e) => {
-        const searchResult = locations.find(location => location.fullAdress.toUpperCase().trim() === inputSearch.toUpperCase().trim());
-        if (searchResult !== undefined) {
-            localStorage.setItem('coordonates', JSON.stringify([{
-                lat: searchResult.lat,
-                long: searchResult.long,
-                fullAdress: searchResult.fullAdress
-            }]));
-        }
-        // console.log(searchResult);
+        setInputSearch(e.target.innerHTML);
+        const locationData = JSON.parse(e.target.getAttribute('data-coords'));
+        console.log(locationData);
+    }
+
+    const getResult2 = () => {
+        console.log('result2');
     }
 
     return (
-        <div ref={ref}>
+        <div ref={ref} className='z-20'>
             <div>
                 <input type='search' placeholder='Q.himbi Av.Goma No.54'
                     className='
@@ -75,22 +73,32 @@ const Search = () => {
                 />
             </div>
             {isSearch && <div className='bg-white mt-2' >
-                <ul className='flex flex-col'>
+                <div className='flex flex-col'>
                     {
                         locations !== null && locations.map(location => {
                             return (
-                                <div className='adress-Container inline-flex hover:bg-gray-400 pl-2 pr-2 max-h-48' key={location.locationID}>
-                                    <li className='cursor-pointer pt-2 pb-2' onClick={(e) => {
-                                        console.log(e.target.innerHTML);
-                                        setInputSearch(e.target.innerHTML);
-                                        getResult(e);
-                                    }}>{location.fullAdress}</li>
+                                <div
+                                    className='adress-Container inline-flex hover:bg-gray-400 pl-2 pr-2 max-h-48 '
+                                    key={location.locationID}
+                                    onClick={getResult2}
+                                >
+                                    <p
+                                        className='cursor-pointer pt-2 pb-2'
+                                        data-coords={JSON.stringify({
+                                        lat: location.lat,
+                                        lng: location.long,
+                                        adress: location.fullAdress
+                                        })}
+                                        onClick={getResult}
+                                    >
+                                        {location.fullAdress}
+                                    </p>
                                 </div>
                             
                             )
                         })
                     }
-                </ul>
+                </div>
             </div>}
         </div>
     );

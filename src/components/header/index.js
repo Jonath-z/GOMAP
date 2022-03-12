@@ -1,6 +1,6 @@
 import React from 'react'
 import Search from './Search'
-import Options from '../option/Options';
+import Options from './option';
 
 const Header = () => {
     return (
