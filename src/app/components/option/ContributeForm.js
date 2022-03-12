@@ -1,5 +1,5 @@
 import React, { useState,useEffect} from 'react';
-import { realTimeDB } from '../../../modules/firebase';
+import { realTimeDB } from '../../modules/firebase';
 import uuid from 'react-uuid';
 
 export const ContributeForm = (props) => {

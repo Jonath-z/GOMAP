@@ -1,13 +1,13 @@
-import MapBox from "./components/map";
-import Header from "./components/header";
+import MapBox from "./app/components/map";
+import Header from "./app/components/header";
+import SearchProvider from "./app/context/SearchContext";
 
-
-function App(props) {
+function App() {
   return (
-    <div>
+    <SearchProvider>
       <Header />
       <MapBox />
-    </div>
+    </SearchProvider>
   );
 }
 

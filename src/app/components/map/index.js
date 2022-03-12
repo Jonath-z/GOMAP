@@ -2,15 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
-import  MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
-
+// import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYXRoYW56IiwiYSI6ImNsMG1lNmVqbzE0YmgzanVvZXpydTlkaTcifQ.CHNESKbLui8ujw8R7ujTBg';
 
 const MapBox = () => {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng, setLng] = useState(29.235600,);
+    const [lng, setLng] = useState(29.235600);
     const [lat, setLat] = useState(-1.683500);
     const [zoom, setZoom] = useState(13);
 
@@ -23,11 +22,11 @@ const MapBox = () => {
             zoom: zoom
         });
 
-        let directions = new MapboxDirections({
-            accessToken: mapboxgl.accessToken,
-            unit: 'metric',
-            profile: 'mapbox/cycling',
-        });
+        // let directions = new MapboxDirections({
+        //     accessToken: mapboxgl.accessToken,
+        //     unit: 'metric',
+        //     profile: 'mapbox/cycling',
+        // });
         const navigationControl = new mapboxgl.NavigationControl();
         const userLocation = new mapboxgl.GeolocateControl({
             positionOptions: {
@@ -37,7 +36,7 @@ const MapBox = () => {
             showUserHeading: true
         });
 
-        map.current.addControl(directions, 'bottom-left');
+        // map.current.addControl(directions, 'bottom-left');
         map.current.addControl(navigationControl, 'top-right');
         map.current.addControl(userLocation);
     

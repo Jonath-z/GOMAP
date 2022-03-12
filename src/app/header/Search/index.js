@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { realTimeDB } from '../../../modules/firebase';
+import { realTimeDB } from '../../modules/firebase';
 import { useDetectClickOutside } from 'react-detect-click-outside';
+import { useSearchResult } from '../../context/SearchContext';
 
 const Search = () => {
     const [isSearch, setIsSearch] = useState(false);
     const [locations, setLocations] = useState(null);
     const [inputSearch, setInputSearch] = useState('');
+    const {setSearchResult } = useSearchResult();
 
     useEffect(() => {
         realTimeDB.ref('locations').on('value', (snapshot) => {
@@ -38,19 +40,25 @@ const Search = () => {
     const ref = useDetectClickOutside({ onTriggered: closeAdressList });
 
     const getResult = (e) => {
-        setInputSearch(e.target.innerHTML);
         const locationData = JSON.parse(e.target.getAttribute('data-coords'));
+        setSearchResult(locationData);
         console.log(locationData);
     }
 
-    const getResult2 = () => {
-        console.log('result2');
+    const onFocus = (e) => {
+        setIsSearch(true);
+    }
+
+    const onChange = (e) => {
+        setInputSearch(e.target.value);
     }
 
     return (
-        <div ref={ref} className='z-20'>
+        <div ref={ref} className='z-0'>
             <div>
-                <input type='search' placeholder='Q.himbi Av.Goma No.54'
+                <input
+                    type='search'
+                    placeholder='Q.himbi Av.Goma No.54'
                     className='
                     w-input-width
                     h-10
@@ -62,43 +70,36 @@ const Search = () => {
                     sm:w-input-width-phone-format
                     xsm:w-input-width-phone-format-xsm
                   '
-                    onFocus={() => {
-                        setIsSearch(true);
-                    }}
-                    onChange={(e) => {
-                        setInputSearch(e.target.value);
-                        getResult(e);
-                    }}
-                    value={inputSearch}
+                    onFocus={onFocus}
+                    onChange={onChange}
                 />
             </div>
             {isSearch && <div className='bg-white mt-2' >
-                <div className='flex flex-col'>
+                <ul className='flex flex-col'>
                     {
                         locations !== null && locations.map(location => {
                             return (
                                 <div
                                     className='adress-Container inline-flex hover:bg-gray-400 pl-2 pr-2 max-h-48 '
                                     key={location.locationID}
-                                    onClick={getResult2}
                                 >
-                                    <p
+                                    <li
                                         className='cursor-pointer pt-2 pb-2'
+                                        onClick={getResult}
                                         data-coords={JSON.stringify({
                                         lat: location.lat,
                                         lng: location.long,
                                         adress: location.fullAdress
                                         })}
-                                        onClick={getResult}
                                     >
                                         {location.fullAdress}
-                                    </p>
+                                    </li>
                                 </div>
                             
                             )
                         })
                     }
-                </div>
+                </ul>
             </div>}
         </div>
     );
