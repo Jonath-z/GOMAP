@@ -5,6 +5,7 @@
   "dependencies": {
     "@craco/craco": "^6.4.0",
     "@mapbox/mapbox-gl-directions": "^4.1.0",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.0",
     "@react-google-maps/api": "^2.5.0",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",

@@ -17,6 +17,7 @@ export const useSearchResult = () => useContext(SearchContext);
 
 const SearchProvider = ({Children}) => {
     const [searchResult, setSearchResult] = useState(null);
+    
     return (
         <SearchContext.Provider value={{ setSearchResult, searchResult }}>
             {Children}

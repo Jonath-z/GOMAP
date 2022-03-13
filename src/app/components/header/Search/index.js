@@ -1,22 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { realTimeDB } from '../../../modules/firebase';
+import React, { useState } from 'react';
 import { useDetectClickOutside } from 'react-detect-click-outside';
-// import { useSearchResult } from '../../../context/SearchContext';
+import { useLocations } from '../../../context/LocationsProvider';
 
-const Search = () => {
+const Search = ({getResult}) => {
     const [isSearch, setIsSearch] = useState(false);
-    const [locations, setLocations] = useState(null);
     const [inputSearch, setInputSearch] = useState('');
-    // const {setSearchResult } = useSearchResult();
-
-    useEffect(() => {
-        realTimeDB.ref('locations').on('value', (snapshot) => {
-            if (snapshot.exists()) {
-                const allLocations = Object.values(snapshot.val());
-                setLocations(allLocations);
-            }
-        });
-    }, []);
+    const locations = useLocations();
 
     const searchInAdressList = () => {
         let searchInputValue = inputSearch;
@@ -38,11 +27,10 @@ const Search = () => {
         setIsSearch(false);
     }
     const ref = useDetectClickOutside({ onTriggered: closeAdressList });
-
-    const getResult = (e) => {
+    
+    const setInputValue = (e) => {
         const locationData = JSON.parse(e.target.getAttribute('data-coords'));
-        // setSearchResult(locationData);
-        console.log(locationData);
+        setInputSearch(locationData.address)
     }
 
     const onFocus = (e) => {
@@ -72,6 +60,7 @@ const Search = () => {
                   '
                     onFocus={onFocus}
                     onChange={onChange}
+                    value={inputSearch}
                 />
             </div>
             {isSearch && <div className='bg-white mt-2' >
@@ -85,11 +74,11 @@ const Search = () => {
                                 >
                                     <li
                                         className='cursor-pointer pt-2 pb-2'
-                                        onClick={getResult}
+                                        onClick={(e) => { getResult(e); setInputValue(e) }}
                                         data-coords={JSON.stringify({
                                         lat: location.lat,
                                         lng: location.long,
-                                        adress: location.fullAdress
+                                        address: location.fullAdress
                                         })}
                                     >
                                         {location.fullAdress}
