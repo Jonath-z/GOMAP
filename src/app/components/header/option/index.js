@@ -31,31 +31,27 @@ const Options = () => {
 
     return (
         <div ref={ref}>
-            <div className='absolute z-10 left-4 xsm:left-2'>
+            <div className='absolute left-4 xsm:left-2'>
                 <CgMenuGridR className='text-white text-4xl cursor-pointer' onClick={openSlideOptions} />
             </div>
             {
                 isSlideOptions &&
-                <div className='absolute z-10 left-0 pb-5 w-max pr-5 pl-5 pt-5 bg-white top-10 sm:mt-5'>
-                    
-                       
-                            <div>
-                                <button type='button' style={{
-                                    display: display
-                                }} className='w-56 ml-2 h-8 hover:bg-gray-300 text-gray-700' onClick={() => {
-                                    setDisplay('none');
-                                    setIsContributeFormOpened(true);
-                                }}>Contribute</button>
+                <div className='absolute z-10 left-0 pb-5 w-max pr-5 pl-5 pt-5 bg-white top-10 sm:mt-5'> 
+                    <div>
+                        <button type='button' style={{
+                            display: display
+                        }} className='w-56 ml-2 h-8 hover:bg-gray-300 text-gray-700' onClick={() => {
+                            setDisplay('none');
+                            setIsContributeFormOpened(true);
+                        }}>Contribute</button>
                         
-                            </div>
-                      
-                    { isContributeFormOpened && <div>
+                    </div>
+                    {isContributeFormOpened && <div>
                         <ContributeForm
                             cancel={cancel}
                         />
                     </div>
-                    }
-                    
+                    }  
                 </div>
             }
         </div>
