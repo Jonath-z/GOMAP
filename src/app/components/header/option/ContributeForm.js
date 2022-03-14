@@ -66,11 +66,11 @@ export const ContributeForm = (props) => {
     return (
         <>
             <div className='z-10 flex flex-col bg-white'>
-                <h1 className='text-center'>Thanks to contribute to develop our map</h1>
+                <h1 className='text-center py-2'>Thanks to contribute to develop our map</h1>
                 <div className='flex flex-col'>
-                    <input type='text' placeholder='Quarter' value={quarter} onChange={(e) => { setQuarter(e.target.value) }} className='border ml-2 input-adress' />
-                    <input type='text' placeholder='Avenue' value={avenue} onChange={(e) => { setAvenue(e.target.value) }} className='border mt-2 ml-2 input-adress' />
-                    <input type='number' placeholder='No' min={1} value={number} onChange={(e) => { setNumber(e.target.value) }} className='border mt-2 ml-2 input-adress' />
+                    <input type='text' placeholder='Quarter' value={quarter} onChange={(e) => { setQuarter(e.target.value) }} className='border ml-2 input-adress px-3' />
+                    <input type='text' placeholder='Avenue' value={avenue} onChange={(e) => { setAvenue(e.target.value) }} className='border mt-2 ml-2 input-adress px-3' />
+                    <input type='number' placeholder='No' min={1} value={number} onChange={(e) => { setNumber(e.target.value) }} className='border mt-2 ml-2 input-adress px-3' />
                     <div className='mt-2 ml-2'>
                         <p className='text-sm text-gray-600'>Longitude: {long}</p>
                         <p className='text-sm text-gray-600'>Latitude: {lat}</p>

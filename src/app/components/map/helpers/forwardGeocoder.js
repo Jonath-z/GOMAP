@@ -27,7 +27,7 @@ const forwardGeocoder = async (query) => {
                 .toLowerCase()
                 .includes(query.toLowerCase())
         ) {
-            feature['place_name'] = `🌲 ${feature.properties.title}`;
+            feature['place_name'] = `📍 ${feature.properties.title}`;
             feature['center'] = feature.geometry.coordinates;
             feature['place_type'] = ['home'];
             matchingFeatures.push(feature);
