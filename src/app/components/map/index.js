@@ -9,7 +9,7 @@ import CustomsControls from './Customs';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
+mapboxgl.accessToken ='pk.eyJ1Ijoiam9uYXRoYW56IiwiYSI6ImNsMG1lNmVqbzE0YmgzanVvZXpydTlkaTcifQ.CHNESKbLui8ujw8R7ujTBg'
 
 const MapBox = ({searchResult}) => {
     const mapContainer = useRef(null);
