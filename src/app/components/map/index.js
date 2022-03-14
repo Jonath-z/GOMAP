@@ -9,7 +9,7 @@ import CustomsControls from './Customs';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYXRoYW56IiwiYSI6ImNsMG1lNmVqbzE0YmgzanVvZXpydTlkaTcifQ.CHNESKbLui8ujw8R7ujTBg';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN
 
 const MapBox = ({searchResult}) => {
     const mapContainer = useRef(null);
@@ -30,7 +30,7 @@ const MapBox = ({searchResult}) => {
         //////////////// STORE THE MAP IN THE REF ////////////
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
-            style: 'mapbox://styles/jonathanz/cl0met6ub000415mx1zo6l0ev',
+            style: 'mapbox://styles/jonathanz/cl0met6ub000415mx1zo6l0evnpm',
             center: [lng, lat],
             zoom: zoom
         });
@@ -68,7 +68,7 @@ const MapBox = ({searchResult}) => {
         });
 
         ////////////// ASSIGN EACH FEATURE TO THE MAP //////////////
-        map.current.addControl(mapGeoCoder);
+        map.current.addControl(mapGeoCoder,'top-right');
         map.current.addControl(navigationControl, 'top-right');
         map.current.addControl(userLocation);
     
@@ -83,7 +83,7 @@ const MapBox = ({searchResult}) => {
         });
     }, []);
     
-    const getDirection = () => {
+    const getDirection = (profile) => {
         const start = userCoordinates;
         const end = resultCoordinates.map(coordinate => Number(coordinate));
         console.log('start', start);
@@ -92,7 +92,7 @@ const MapBox = ({searchResult}) => {
         const direction = new MapboxDirections({
             accessToken: mapboxgl.accessToken,
             unit: 'metric',
-            profile: 'mapbox/driving',
+            profile: `mapbox/${profile}`,
             interactive: false,
             controls: {
                 inputs: false,
@@ -100,16 +100,21 @@ const MapBox = ({searchResult}) => {
             }
         });
 
-            direction.setOrigin(start);
-            direction.setDestination(end);
-        map.current.addControl(direction, 'bottom-left');
+        direction.setOrigin(start);
+        direction.setDestination(end);
+        map.current.addControl(direction);
     };
 
     return (
-        <>
+        <div>
             <div ref={mapContainer} className="absolute top-0 left-0 right-0 bottom-0" />
-            <CustomsControls getDirection={getDirection}/>
-        </>
+            <CustomsControls
+                getDirection={() => { getDirection('driving') }}
+                drivingProfile={() => { getDirection('driving') }}
+                walkingProfile={() => { getDirection('walking') }}
+                cyclingProfile={() => { getDirection('cycling') }}
+            />
+        </div>
     );
 };
 

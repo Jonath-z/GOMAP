@@ -7,16 +7,13 @@ const Options = () => {
     const [isSlideOptions, setIsSlideOptions] = useState(false);
     const [isContributeFormOpened, setIsContributeFormOpened] = useState(false);
     const [display, setDisplay] = useState('block');
-    // const openContributeForm = () => {
-    //     setIsContributeFormOpened(true)
-    // }
+
     const openSlideOptions = () => {
         if (isSlideOptions) {
             setIsSlideOptions(false);
         }
         else {
             setIsSlideOptions(true);
-            // setIsContributeFormOpened(true);
         }
     }
     const closeSlideOptions = () => {
@@ -31,8 +28,8 @@ const Options = () => {
 
     return (
         <div ref={ref}>
-            <div className='absolute left-4 xsm:left-2'>
-                <CgMenuGridR className='text-white text-4xl cursor-pointer' onClick={openSlideOptions} />
+             <CgMenuGridR className='text-white text-4xl cursor-pointer absolute left-4' onClick={openSlideOptions} />
+            <div className='absolute top-10 xsm:left-2 mt-20'>
             </div>
             {
                 isSlideOptions &&
