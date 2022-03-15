@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import forwardGeocoder from './helpers/forwardGeocoder';
 import CustomsControls from './Customs';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
-import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 
-mapboxgl.accessToken ='pk.eyJ1Ijoiam9uYXRoYW56IiwiYSI6ImNsMG1lNmVqbzE0YmgzanVvZXpydTlkaTcifQ.CHNESKbLui8ujw8R7ujTBg'
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const MapBox = ({searchResult}) => {
     const mapContainer = useRef(null);
@@ -30,7 +30,7 @@ const MapBox = ({searchResult}) => {
         //////////////// STORE THE MAP IN THE REF ////////////
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
-            style: 'mapbox://styles/jonathanz/cl0met6ub000415mx1zo6l0evnpm',
+            style: process.env.REACT_APP_MAPBOX_CUSTOM_STYLE,
             center: [lng, lat],
             zoom: zoom
         });
@@ -68,7 +68,7 @@ const MapBox = ({searchResult}) => {
         });
 
         ////////////// ASSIGN EACH FEATURE TO THE MAP //////////////
-        map.current.addControl(mapGeoCoder,'top-right');
+        map.current.addControl(mapGeoCoder);
         map.current.addControl(navigationControl, 'top-right');
         map.current.addControl(userLocation);
     
