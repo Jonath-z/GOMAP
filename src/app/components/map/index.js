@@ -3,13 +3,14 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl from '!mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import forwardGeocoder from './helpers/forwardGeocoder';
 import CustomsControls from './Customs';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+
 
 const MapBox = ({searchResult}) => {
     const mapContainer = useRef(null);
@@ -19,6 +20,10 @@ const MapBox = ({searchResult}) => {
     const [zoom, setZoom] = useState(13);
     const [userCoordinates, setUserCoordinates] = useState([]);
     const [resultCoordinates, setResultCoordinates] = useState([]);
+    const [popupdetails, setPopupDetails] = useState({
+        coordinates: ['2', '-1'],
+        title: ""
+    });
 
     useEffect(() => {
         setLat(searchResult.lat);
@@ -37,6 +42,7 @@ const MapBox = ({searchResult}) => {
 
         /////////////// CREATE NAVIGATION CONTROL /////////
         const navigationControl = new mapboxgl.NavigationControl();
+
         ///////////// CREATE GEOLOCATION CONTROL TO GET THE USER'S CURRENT LOCATION ///////
         const userLocation = new mapboxgl.GeolocateControl({
             positionOptions: {
@@ -54,25 +60,35 @@ const MapBox = ({searchResult}) => {
             zoom: 16,
             mapboxgl: mapboxgl,
         });
+
+
+        new mapboxgl.Popup()
+            .setHTML(popupdetails.title)
+            .setLngLat(popupdetails.coordinates)
+            .addTo(map.current);
+
         userLocation.on('geolocate', (e) => {
             const lng = e.coords.longitude;
             const lat = e.coords.latitude
             const position = [lng, lat];
             setUserCoordinates(position);
-            console.log(position);
         });
 
         mapGeoCoder.on('result', (e) => {
             setResultCoordinates(e.result.center);
+            setPopupDetails({
+                coordinates: e.result.properties.coordinates,
+                title: e.result.properties.title
+            });
             console.log(e);
-        });
+        });   
 
         ////////////// ASSIGN EACH FEATURE TO THE MAP //////////////
         map.current.addControl(mapGeoCoder);
         map.current.addControl(navigationControl, 'top-right');
         map.current.addControl(userLocation);
     
-    }, [lat, searchResult.lat, searchResult.log, lng, zoom, searchResult.lng]);
+    }, [lat, lng, zoom,popupdetails]);
 
     useEffect(() => {
         if (!map.current) return;
@@ -86,8 +102,6 @@ const MapBox = ({searchResult}) => {
     const getDirection = (profile) => {
         const start = userCoordinates;
         const end = resultCoordinates.map(coordinate => Number(coordinate));
-        console.log('start', start);
-        console.log('end', end);
 
         const direction = new MapboxDirections({
             accessToken: mapboxgl.accessToken,
