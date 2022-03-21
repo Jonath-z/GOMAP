@@ -2,6 +2,17 @@ import MapBox from "./app/components/map";
 import Header from "./app/components/header";
 import LocationsProvider from "./app/context/LocationsProvider";
 import { useState } from "react";
+import Login from "./app/components/auth/login/Login";
+
+// import react-router-dom
+
+import {
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import Register from "./app/components/auth/register/Register";
+import Forgot from "./app/components/auth/forgot/Forgot";
 
 function App() {
   const [searchResult, setSearchResult] = useState({
@@ -16,12 +27,24 @@ function App() {
   };
 
   return (
-    <>
-      <LocationsProvider>
-        <Header searchResult={getSearchResult} />
-        <MapBox searchResult={searchResult}/>
+        <LocationsProvider>
+            <Routes>            
+                <Route path="/" element={
+                   <>
+                  <Header searchResult={getSearchResult} />
+
+                  {/* uncoment the statement bellow and use a valid token to display it */}
+                  {/* <MapBox searchResult={searchResult}/> */}
+                  </>} />
+                <Route path="/login" element={<Login />} />
+
+                <Route path="/forgot" element={<Forgot />} />
+
+                <Route path="/register" element={<Register/>} />
+
+            </Routes>
       </LocationsProvider>
-    </>
+
   );
 }
 
