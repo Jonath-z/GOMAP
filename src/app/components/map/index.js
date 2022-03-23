@@ -74,7 +74,6 @@ const MapBox = () => {
                 coordinates: e.result.properties.coordinates,
                 title: e.result.properties.title
             });
-            console.log(e);
         });   
 
         ////////////// ASSIGN EACH FEATURE TO THE MAP //////////////
@@ -96,9 +95,6 @@ const MapBox = () => {
     const getDirection = (profile) => {
         const start = userCoordinates;
         const end = resultCoordinates.map(coordinate => Number(coordinate));
-
-        console.log(start);
-        console.log(end);
 
         const direction = new MapboxDirections({
             accessToken: mapboxgl.accessToken,
