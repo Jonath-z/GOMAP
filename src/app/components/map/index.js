@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import forwardGeocoder from './helpers/forwardGeocoder';
