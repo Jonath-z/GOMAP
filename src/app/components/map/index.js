@@ -12,7 +12,7 @@ import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-direct
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 
-const MapBox = ({searchResult}) => {
+const MapBox = () => {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [lng, setLng] = useState(29.235600);
@@ -24,11 +24,6 @@ const MapBox = ({searchResult}) => {
         coordinates: ['2', '-1'],
         title: ""
     });
-
-    useEffect(() => {
-        setLat(searchResult.lat);
-        setLng(searchResult.lng);
-    }, [searchResult.lng, searchResult.lat]);
 
     useEffect(() => {
         if (map.current) return;
@@ -102,6 +97,9 @@ const MapBox = ({searchResult}) => {
     const getDirection = (profile) => {
         const start = userCoordinates;
         const end = resultCoordinates.map(coordinate => Number(coordinate));
+
+        console.log(start);
+        console.log(end);
 
         const direction = new MapboxDirections({
             accessToken: mapboxgl.accessToken,
