@@ -4,9 +4,13 @@ import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import forwardGeocoder from "./helpers/forwardGeocoder";
-import CustomsControls from "./Customs";
-import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+import forwardGeocoder from "../../helpers/forwardGeocoder";
+import usePopup from "../../hooks/usePopup";
+import useDirection from "../../hooks/useDirection";
+import useCurrentLocation from "../../hooks/useCurrentLocation";
+import BottomNav from "../ButtomNav";
+import ErrorBox from "../../modules/__modules/ErrorBox";
+import Controls from "../../modules/__modules/Controls";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -19,13 +23,15 @@ const MapBox = () => {
   const [userCoordinates, setUserCoordinates] = useState([]);
   const [resultCoordinates, setResultCoordinates] = useState([]);
   const [popupdetails, setPopupDetails] = useState({
-    coordinates: ["2", "-1"],
+    coordinates: [2, -1],
     title: "",
   });
 
+  const [isErroBoxClosed, setIsErrorBoxClosed] = useState(true);
+
+  //////////////// STORE THE MAP IN THE REF ////////////
   useEffect(() => {
     if (map.current) return;
-    //////////////// STORE THE MAP IN THE REF ////////////
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: process.env.REACT_APP_MAPBOX_CUSTOM_STYLE,
@@ -33,17 +39,7 @@ const MapBox = () => {
       zoom: zoom,
     });
 
-    /////////////// CREATE NAVIGATION CONTROL /////////
     const navigationControl = new mapboxgl.NavigationControl();
-
-    ///////////// CREATE GEOLOCATION CONTROL TO GET THE USER'S CURRENT LOCATION ///////
-    const userLocation = new mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true,
-      },
-      trackUserLocation: true,
-      showUserHeading: true,
-    });
 
     ////////////////// CREATE A GEOCODER WITH CUSTOMS ADDRESS ////////
     const mapGeoCoder = new MapboxGeocoder({
@@ -54,30 +50,17 @@ const MapBox = () => {
       mapboxgl: mapboxgl,
     });
 
-    new mapboxgl.Popup()
-      .setHTML(popupdetails.title)
-      .setLngLat(popupdetails.coordinates)
-      .addTo(map.current);
-
-    userLocation.on("geolocate", (e) => {
-      const lng = e.coords.longitude;
-      const lat = e.coords.latitude;
-      const position = [lng, lat];
-      setUserCoordinates(position);
-    });
-
     mapGeoCoder.on("result", (e) => {
+      console.log("coordinates", e);
       setResultCoordinates(e.result.center);
       setPopupDetails({
-        coordinates: e.result.properties.coordinates,
+        coordinates: e.result.center,
         title: e.result.properties.title,
       });
     });
-
     ////////////// ASSIGN EACH FEATURE TO THE MAP //////////////
     map.current.addControl(mapGeoCoder);
     map.current.addControl(navigationControl, "top-right");
-    map.current.addControl(userLocation);
   }, [lat, lng, zoom, popupdetails]);
 
   useEffect(() => {
@@ -89,45 +72,43 @@ const MapBox = () => {
     });
   }, []);
 
-  const getDirection = (profile) => {
-    const start = userCoordinates;
-    const end = resultCoordinates.map((coordinate) => Number(coordinate));
+  const { getDirection } = useDirection(
+    userCoordinates,
+    resultCoordinates,
+    mapboxgl,
+    map.current
+  );
 
-    const direction = new MapboxDirections({
-      accessToken: mapboxgl.accessToken,
-      unit: "metric",
-      profile: `mapbox/${profile}`,
-      interactive: false,
-      controls: {
-        inputs: false,
-        instructions: false,
-      },
-    });
-
-    direction.setOrigin(start);
-    direction.setDestination(end);
-    map.current.addControl(direction);
-  };
+  usePopup(map.current, popupdetails);
+  useCurrentLocation(setUserCoordinates, map.current);
 
   return (
     <div>
       <div
         ref={mapContainer}
         className="absolute top-0 left-0 right-0 bottom-0"
-      />
-      <CustomsControls
-        getDirection={() => {
-          getDirection("driving");
-        }}
-        drivingProfile={() => {
-          getDirection("driving");
-        }}
-        walkingProfile={() => {
-          getDirection("walking");
-        }}
-        cyclingProfile={() => {
-          getDirection("cycling");
-        }}
+      >
+        <Controls
+          getDirection={() => {
+            getDirection("driving");
+          }}
+          drivingProfile={() => {
+            getDirection("driving");
+          }}
+          walkingProfile={() => {
+            getDirection("walking");
+          }}
+          cyclingProfile={() => {
+            getDirection("cycling");
+          }}
+          onGetCurrenLocation={() => null}
+        />
+      </div>
+      <BottomNav onGetCurrentLocaiton={() => null} />
+      <ErrorBox
+        ErrorMessage={"Direction not found."}
+        isClosed={isErroBoxClosed}
+        onCloseErrorBox={() => setIsErrorBoxClosed(!isErroBoxClosed)}
       />
     </div>
   );
