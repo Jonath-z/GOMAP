@@ -1,4 +1,4 @@
-import { realTimeDB } from "../../../modules/firebase";
+import { realTimeDB } from "../modules/firebase";
 
 const forwardGeocoder = async (query) => {
   const ref = realTimeDB.ref("locations");
