@@ -1,8 +1,10 @@
+const defaultColors = require("tailwindcss/colors");
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
+      ...defaultColors,
       red: "#ff0000",
       black: "#000000",
       white: "#ffffff",
@@ -25,6 +27,7 @@ module.exports = {
       },
       fontFamily: {
         robotto: ["Roboto", "sans-serif"],
+        openSans: ["Open Sans", "sans-serif"],
       },
     },
   },

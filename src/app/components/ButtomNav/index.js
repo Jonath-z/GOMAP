@@ -5,10 +5,13 @@ import {
   VPlusCircle,
 } from "../../modules/vectors";
 
-const BottomNav = ({ onGetCurrentLocaiton }) => {
+const BottomNav = ({ onGetCurrentLocaiton, getDirection }) => {
   return (
-    <div className="bg-white py-2 px-5 fixed bottom-0 left-0 right-0 flex justify-between items-center mb-8 mx-10 rounded-3xl font-robotto font-bold overMobile:hidden">
-      <button className="flex flex-col justify-center items-center">
+    <div className="bg-gray-50 border border-gray-200 py-2 px-5 fixed bottom-0 left-0 right-0 flex justify-between items-center mb-8 mx-10 rounded-3xl font-robotto font-bold overMobile:hidden">
+      <button
+        onClick={getDirection}
+        className="flex flex-col justify-center items-center"
+      >
         <VDirection className="text-2xl" />
         <p className="p-0 m-0 text-xs">Direction</p>
       </button>
