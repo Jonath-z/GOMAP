@@ -1,4 +1,5 @@
-import React, { useState, createContext, useContext } from "react";
+import { useContext, useState, createContext } from "react";
+
 const defaultData = {
   lng: 29.2356,
   lat: -1.6835,

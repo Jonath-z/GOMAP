@@ -45,26 +45,16 @@ const Search = ({ getResult }) => {
     <div ref={ref} className="z-0">
       <div>
         <input
-          type="search"
+          type="text"
           placeholder="Q.himbi Av.Goma No.54"
-          className="
-                    w-input-width
-                    h-10
-                    pl-2
-                    shadow-xl
-                    rounded-xl
-                  bg-gray-50
-                    outline-none
-                    sm:w-input-width-phone-format
-                    xsm:w-input-width-phone-format-xsm
-                  "
+          className="w-input-width h-10 px-5 font-openSans border border-gray-200 rounded-full bg-gray-50 outline-none sm:w-input-width-phone-format xsm:w-input-width-phone-format-xsm"
           onFocus={onFocus}
           onChange={onChange}
           value={inputSearch}
         />
       </div>
       {isSearch && (
-        <div className="bg-white mt-2">
+        <div className="bg-white mt-2 font-openSans font-medium">
           <ul className="flex flex-col">
             {locations !== null &&
               locations.map((location) => {
@@ -76,7 +66,7 @@ const Search = ({ getResult }) => {
                     <li
                       className="cursor-pointer pt-2 pb-2"
                       onClick={(e) => {
-                        getResult(e);
+                        // getResult(e);
                         setInputValue(e);
                       }}
                       data-coords={JSON.stringify({
