@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css";
-import mapboxgl from "mapbox-gl";
+import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import usePopup from "../../hooks/usePopup";
 import useDirection from "../../hooks/useDirection";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
@@ -20,7 +20,7 @@ const MapBox = () => {
   const map = useRef(null);
   const [lng, setLng] = useState(29.2356);
   const [lat, setLat] = useState(-1.6835);
-  const [zoom, setZoom] = useState(13);
+  const [zoom, setZoom] = useState(14);
   const [userCoordinates, setUserCoordinates] = useState([]);
   const [resultCoordinates, setResultCoordinates] = useState([]);
   const [popupdetails, setPopupDetails] = useState({
@@ -35,18 +35,25 @@ const MapBox = () => {
     if (map.current) return;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: process.env.REACT_APP_MAPBOX_CUSTOM_STYLE,
+      style:
+        process.env.REACT_APP_MAPBOX_CUSTOM_STYLE ||
+        "mapbox://styles/mapbox/streets-v12",
       center: [lng, lat],
       zoom: zoom,
+      projection: "naturalEarth",
     });
   }, [lat, lng, zoom]);
 
   useEffect(() => {
+    if (map.current) return;
     const navigationControl = new mapboxgl.NavigationControl();
     map.current.addControl(navigationControl, "top-right");
   }, []);
 
-  const { getCurrentLocation } = useCurrentLocation(setUserCoordinates, map);
+  const { getCurrentLocation } = useCurrentLocation(
+    setUserCoordinates,
+    map.current
+  );
 
   useGeoCoder(map, mapboxgl, setResultCoordinates, setPopupDetails);
   useMapMove(map.current, setLng, setLat, setZoom);
@@ -64,49 +71,48 @@ const MapBox = () => {
     <div>
       <div
         ref={mapContainer}
-        className="absolute top-0 left-0 right-0 bottom-0"
-      >
-        <Controls
-          getDirection={() => {
-            console.log("user coordinate", userCoordinates);
-            if (userCoordinates.length) {
-              getDirection("driving");
-            }
-            setIsErrorBoxClosed(false);
-            setErrorMessage(
-              "Unable to find the direaction without your location"
-            );
-          }}
-          drivingProfile={() => {
-            if (!userCoordinates.length) {
-              getDirection("driving");
-            }
-            setIsErrorBoxClosed(false);
-            setErrorMessage(
-              "Unable to find the direaction without your location"
-            );
-          }}
-          walkingProfile={() => {
-            if (!userCoordinates.length) {
-              getDirection("walking");
-            }
-            setIsErrorBoxClosed(false);
-            setErrorMessage(
-              "Unable to find the direaction without your location"
-            );
-          }}
-          cyclingProfile={() => {
-            if (!userCoordinates.length) {
-              getDirection("cycling");
-            }
-            setIsErrorBoxClosed(false);
-            setErrorMessage(
-              "Unable to find the direaction without your location"
-            );
-          }}
-          onGetCurrenLocation={getCurrentLocation}
-        />
-      </div>
+        className="absolute top-0 left-0 right-0 bottom-0 h-screen w-full"
+      />
+      <Controls
+        getDirection={() => {
+          if (userCoordinates.length) {
+            getDirection("driving");
+          }
+          setIsErrorBoxClosed(false);
+          setErrorMessage(
+            "Unable to find the direaction without your location"
+          );
+        }}
+        drivingProfile={() => {
+          if (!userCoordinates.length) {
+            getDirection("driving");
+          }
+          setIsErrorBoxClosed(false);
+          setErrorMessage(
+            "Unable to find the direaction without your location"
+          );
+        }}
+        walkingProfile={() => {
+          if (!userCoordinates.length) {
+            getDirection("walking");
+          }
+          setIsErrorBoxClosed(false);
+          setErrorMessage(
+            "Unable to find the direaction without your location"
+          );
+        }}
+        cyclingProfile={() => {
+          if (!userCoordinates.length) {
+            getDirection("cycling");
+          }
+          setIsErrorBoxClosed(false);
+          setErrorMessage(
+            "Unable to find the direaction without your location"
+          );
+        }}
+        onGetCurrenLocation={getCurrentLocation}
+      />
+
       <BottomNav
         getDirection={() => {
           if (userCoordinates.length) {

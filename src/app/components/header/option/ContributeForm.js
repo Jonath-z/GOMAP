@@ -13,13 +13,13 @@ export const ContributeForm = (props) => {
   const error = (err) => {
     console.log(err);
   };
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           setLat(pos.coords.latitude);
           setLong(pos.coords.longitude);
-          // console.log(pos.coords);
         },
         error,
         {

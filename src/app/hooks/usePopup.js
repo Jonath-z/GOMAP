@@ -8,7 +8,6 @@ const usePopup = (Map, popupdetails) => {
     const formatedCoords = coordinates.map((coordinate) => {
       return Number(coordinate);
     });
-    console.log("formated coordinates", formatedCoords);
 
     const popup = new mapboxgl.Popup({ closeOnClick: false });
     if (Map) popup.setLngLat(formatedCoords).setHTML(title).addTo(Map);

@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 
 const useCurrentLocation = (setUserCoordinates, map) => {
   let userGeolocate = useRef(null);
+  const [controlLoaded, setControlLoaded] = useState(false);
 
   useEffect(() => {
     userGeolocate.current = new mapboxgl.GeolocateControl({
@@ -14,21 +15,26 @@ const useCurrentLocation = (setUserCoordinates, map) => {
       showUserHeading: true,
     });
 
+    if (map) map.addControl(userGeolocate.current, "top-right");
+  }, [map]);
+
+  useEffect(() => {
+    if (!map || !userGeolocate.current) return;
     userGeolocate.current.on("geolocate", (e) => {
-      console.log("user location event", e);
       const lng = e.coords.longitude;
       const lat = e.coords.latitude;
       const position = [lng, lat];
-      console.log("position", position);
       setUserCoordinates(position);
     });
-
-    if (map) map.current.addControl(userGeolocate.current, "top-right");
-  }, [map]);
+  }, []);
 
   const getCurrentLocation = () => {
-    console.log("location getted");
-    userGeolocate.current.trigger();
+    // if (!map || !userGeolocate.current) return;
+    if (map) {
+      console.log({ loaded: map.hasControl(userGeolocate.current) });
+    }
+    // userGeolocate.current.trigger();
+    // map.addControl(userGeolocate.current, "top-right").trigger();
   };
 
   return { getCurrentLocation };

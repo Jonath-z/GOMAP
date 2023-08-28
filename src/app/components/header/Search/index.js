@@ -66,7 +66,7 @@ const Search = ({ getResult }) => {
                     <li
                       className="cursor-pointer pt-2 pb-2"
                       onClick={(e) => {
-                        getResult(e);
+                        // getResult(e);
                         setInputValue(e);
                       }}
                       data-coords={JSON.stringify({
